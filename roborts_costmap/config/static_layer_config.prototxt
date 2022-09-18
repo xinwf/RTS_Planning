@@ -1,0 +1,10 @@
+first_map_only: false
+subscribe_to_updates: true
+track_unknown_space: false
+use_maximum: true
+unknown_cost_value: -1
+lethal_threshold: 100
+trinary_map: false
+topic_name: "/map"
+is_raw_rosmessage: true
+is_debug: true

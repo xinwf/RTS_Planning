@@ -1,0 +1,82 @@
+syntax = "proto3";
+package roborts_decision;
+
+message Point {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+
+     float roll  = 4;
+     float pitch = 5;
+     float yaw   = 6;
+}
+
+message EscapeConstraint {
+   float left_x_limit = 1;
+   float right_x_limit = 2;
+   float robot_x_limit = 3;
+   float left_random_min_x = 4;
+   float left_random_max_x = 5;
+   float right_random_min_x = 6;
+   float right_random_max_x = 7;
+   int32 obstacle_count = 8;
+}
+
+message SearchConstraint {
+  float x_limit = 1;
+  float y_limit = 2;
+}
+
+
+message WhirlVel {
+  float angle_x_vel = 1;
+  float angle_y_vel = 2;
+  float angle_z_vel = 3;
+}
+
+message MultiRobot {
+  Point start_position = 7;
+}
+
+message BlueOrRedGroup{
+  MultiRobot master_bot = 1;
+  MultiRobot wing_bot = 2;
+  Point reload_point = 3;
+  Point shield_point = 4;
+  repeated Point patrol = 5;
+}
+
+
+message DecisionConfig {
+    string strategy = 1;
+    bool use_camera = 2;
+    bool master = 3 ;
+    bool isblue = 4 ; 
+    bool usewifi = 5;
+    string master_ip = 6; 
+    string guard_ip = 7;
+    int32 remain_bullet = 8;
+    EscapeConstraint escape = 9;
+    BlueOrRedGroup  blue = 10;
+    BlueOrRedGroup  red = 11;
+    SearchConstraint search_limit = 12;
+    WhirlVel whirl_vel = 13;
+
+    repeated Point lurk_position = 14;
+    repeated Point search_region_1 = 15;
+    repeated Point search_region_2 = 16;
+    repeated Point search_region_3 = 17;
+    repeated Point search_region_4 = 18;
+
+    bool can_shoot = 19;
+    int32 shoot_delay_ms = 20;
+    bool use_refree = 21;
+    float map_offset_x = 22;
+    float map_offset_y = 23;
+    bool auto_init_pose = 24;
+    bool auto_fix_localization = 25;
+
+}
+
+
+

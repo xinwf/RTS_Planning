@@ -1,0 +1,14 @@
+
+
+<launch>
+
+  <!-- Run the slam gmapping -->
+  <include file="$(find roborts_bringup)/launch/slam_gmapping.xml"/>
+
+  <!-- Publish static tf -->
+  <include file="$(find roborts_bringup)/launch/static_tf.launch" />
+
+  <include file="$(find roborts_bringup)/launch/base.launch" />
+
+</launch>
+

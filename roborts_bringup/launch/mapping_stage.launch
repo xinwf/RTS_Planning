@@ -1,0 +1,12 @@
+<launch>
+  <master auto="start"/>
+  <param name="/use_sim_time" value="true"/>
+
+  <!-- Run the slam -->
+  <include file="$(find roborts_bringup)/launch/slam_gmapping.xml"/>
+
+  <!-- Run the rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find roborts_bringup)/rviz/mapping.rviz" />
+
+</launch>
+

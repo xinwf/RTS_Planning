@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/zeze/catkin_ws/src/roborts_decision/build/devel/setup.sh

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="map" value="RMUA_2020"/>  
+  <arg name="init_x" value="0.7"/>  
+  <arg name="init_y" value="0.67"/>  
+  <arg name="init_a" value="1.57"/>  
+  <!--Load parameters for localization node  -->
+  <rosparam command="load" file="$(find roborts_localization)/config/localization.yaml" />
+  <rosparam command="load" file="$(find roborts_localization)/amcl/config/amcl.yaml" />
+  <include file="$(find roborts_bringup)/launch/ip.launch" />
+  <!-- Publish static tf -->
+  <include file="$(find roborts_bringup)/launch/static_tf.launch" />
+  <include file="$(find roborts_bringup)/launch/base.launch" />
+
+  <!-- color : 1 ->  red   2 -> blue -->
+  <!-- id : 1 ->  one   2 -> two -->
+  <param name="color"      value="2"/>
+  <param name="id"      value="1"/>
+  <node name="guard_pulisher_node" pkg="guard_publiisher" type="guard_pulisher_node" respawn="false" />
+  <!-- Run the map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find roborts_bringup)/maps/$(arg map).yaml" respawn="false" />
+
+  <!-- Run the rviz -->
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find roborts_bringup)/rviz/test_finish.rviz" /> -->
+
+
+  <!-- Run the localization node -->
+  <node pkg="roborts_localization" type="localization_node" name="localization_node" respawn="false" >
+    <param name="/initial_pose_a"      value="$(arg init_a)"/>
+    <param name="/initial_pose_x"      value="$(arg init_x)"/>
+    <param name="/initial_pose_y"      value="$(arg init_y)"/>
+  </node>
+
+
+  <!-- 双激光雷达融合 -->
+  <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch" />  
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
+    args="-0.1 0.0 0.0 0.0 0.0  0 /base_link /laser_link 40" />
+  <!-- 双激光雷达融合 -->
+  
+  <!-- 虚拟墙 -->
+  <!-- <arg name="virtual_wall" default="$(find yocs_virtual_sensor)/data/wall_list.yaml"/>
+  <node name="virtual_sensor" pkg="yocs_virtual_sensor" type="virtual_sensor_node" >
+    <param name="range_min"    value="0.0"/>
+    <param name="range_max"    value="10.0"/>
+    <param name="frequency"    value="100.0"/>
+    <param name="hits_count"   value="100"/>
+    <param name="global_frame" value="/map"/>
+    <param name="sensor_frame" value="/gimbal_laser"/>
+  </node>
+  
+  <node pkg="tf" type="static_transform_publisher" name="base_to_virtual" args="0 0 0 0 0 0 /gimbal_laser /virtual_laser 50"/>
+  <node name="wall_publisher" pkg="yocs_virtual_sensor" type="wall_publisher.py" required="true" >
+    <param name="~filename" value="$(arg virtual_wall)"/>
+  </node> -->
+  <!-- 虚拟墙 -->
+
+  <!-- <node pkg="roborts_decision" type="decision_node" name="decision_node" respawn="false" /> -->
+
+</launch>
+

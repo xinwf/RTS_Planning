@@ -1,0 +1,2 @@
+Armor my_armor
+int32 lurk_mode
