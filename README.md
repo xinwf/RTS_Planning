@@ -32,7 +32,7 @@ sudo apt-get install -y ros-${ROS_DISTRO}-cv-bridge           \
                         ros-${ROS_DISTRO}-rviz                \
                         protobuf-compiler               \
                         libprotobuf-dev                 \
-                        libsuitesparse-dev              \、
+                        libsuitesparse-dev              \
                         libgoogle-glog-dev							
 ```
 
