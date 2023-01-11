@@ -313,8 +313,20 @@ namespace roborts_global_planner{
                                                       abs(static_cast<int>((index1 % gridmap_width_ - index2 % gridmap_width_))));
     }
     /**
-     * @brief 获取相邻的八个点
-     * 
+     * @brief 这段代码用于在A*算法中获取当前结点周围8个相邻结点。具体实现是通过函数GetNineNeighbors来实现，
+     * 该函数接受一个参数current_index，表示当前结点的索引，以及一个std::vector<int>类型的参数neighbors_index，
+     * 用于存储周围8个相邻结点的索引。
+        在代码中，通过判断当前结点索引与地图的宽高关系，
+        确定当前结点的上、左上、左、左下、下、右下、右、右上 8 个方向是否能够扩展，
+        并将索引加入到neighbors_index中, 当然也有其他做法来确定八邻域，这里只是一种实现方式。
+        最终的neighbors_index存储的就是周围八个相邻结点的索引，供A*算法继续使用。
+
+        在这段代码中还有一些细节需要注意：
+        1、首先，在获取每一个相邻结点的索引之前，会清空neighbors_index以保证在每次调用时获取的都是最新的索引。
+        2、其次，使用 (current_index - 1 + 1) % gridmap_width_!= 0 这样的判断语句来确定当前结点是否位于地图的最左侧，
+        3、如果不是则可以扩展到左侧。因为最左侧的结点不能向左扩展。
+        4、同样的，在判断其他方向时，也都使用了类似的判断语句。
+        5、总结一下, 这段代码的功能是用来在A*算法中求八邻域结点的索引，使用一种判断的方式来确定能否扩展到相邻结点。
      * @param current_index 当前的index
      * @param neighbors_index 用来储存相邻八个点的一维vector
      */
